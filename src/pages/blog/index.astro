@@ -34,6 +34,7 @@ const [destaque, ...demais] = posts;
   </section>
 
   <section class="container-site pb-24 md:pb-32" aria-label="Publicações do blog">
+    <h2 class="sr-only">Publicações</h2>
     <div class="grid gap-7 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
       {destaque && <BlogCard post={destaque} featured />}
       {demais.map((post, i) => <BlogCard post={post} index={i} />)}

@@ -50,26 +50,25 @@ const posts = (await getCollection('blog'))
     <div
       class="container-site grid items-center gap-14 py-14 md:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:py-24"
     >
+      {/* O hero nunca nasce com opacity 0 (arruinaria o LCP): a entrada usa
+          animação CSS só de transform, que pinta já no primeiro frame */}
       <div>
-        <p class="eyebrow" data-reveal>Farmacêutica gaúcha · Desde 1957</p>
+        <p class="eyebrow hero-enter">Farmacêutica gaúcha · Desde 1957</p>
         <h1
-          class="mt-4 text-[2.75rem] leading-[1.04] text-ink sm:text-6xl xl:text-[4.5rem]"
-          data-reveal
-          style="--reveal-delay: 90ms"
+          class="hero-enter mt-4 text-[2.75rem] leading-[1.04] text-ink sm:text-6xl xl:text-[4.5rem]"
+          style="--enter-delay: 90ms"
         >
           Produtos que moram no <em class="italic text-brand">coração</em> dos gaúchos
         </h1>
         <p
-          class="mt-6 max-w-xl text-lg text-ink-soft sm:text-xl"
-          data-reveal
-          style="--reveal-delay: 180ms"
+          class="hero-enter mt-6 max-w-xl text-lg text-ink-soft sm:text-xl"
+          style="--enter-delay: 180ms"
         >
           Do bebê aos avós, qualidade e carinho desde 1957.
         </p>
         <div
-          class="mt-9 flex flex-wrap items-center gap-4"
-          data-reveal
-          style="--reveal-delay: 270ms"
+          class="hero-enter mt-9 flex flex-wrap items-center gap-4"
+          style="--enter-delay: 270ms"
         >
           <a href="/produtos/" class="btn btn-primary">Conhecer os produtos</a>
           <a href={SITE.lojaUrl} target="_blank" rel="noopener" class="btn btn-outline">
@@ -80,9 +79,8 @@ const posts = (await getCollection('blog'))
 
       <!-- Composição gráfica: arco de botica + produtos ícone + selo -->
       <div
-        class="relative mx-auto w-full max-w-[24rem] lg:max-w-[27rem]"
-        data-reveal
-        style="--reveal-delay: 160ms"
+        class="hero-enter relative mx-auto w-full max-w-[24rem] lg:max-w-[27rem]"
+        style="--enter-delay: 160ms"
       >
         <div class="relative aspect-[4/5] w-full">
           <span
@@ -98,6 +96,7 @@ const posts = (await getCollection('blog'))
             width={480}
             densities={[1, 2]}
             loading="eager"
+            fetchpriority="high"
             class="absolute bottom-[7%] left-1/2 z-10 w-[56%] -translate-x-1/2 drop-shadow-[0_30px_30px_rgb(44_35_32/0.30)]"
           />
           <Image
@@ -242,7 +241,8 @@ const posts = (await getCollection('blog'))
           {missao.texto}
         </p>
         <div class="mt-8" data-reveal style="--reveal-delay: 240ms">
-          <a href="/quem-somos/" class="btn btn-outline">{missao.cta.texto}</a>
+          {/* "Veja Mais" original trocado por texto descritivo (SEO/a11y) */}
+          <a href="/quem-somos/" class="btn btn-outline">Conheça o Laboratório</a>
         </div>
       </div>
     </div>
@@ -268,11 +268,11 @@ const posts = (await getCollection('blog'))
 
   <!-- ========== TEASER DA HISTÓRIA ========== -->
   <section class="relative overflow-hidden bg-brand text-white">
-    <span aria-hidden="true" class="history-watermark select-none">1957</span>
+    <span aria-hidden="true" class="history-watermark select-none"></span>
     <div class="container-site relative py-20 md:py-28">
       <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-8">
         <div data-reveal>
-          <p class="eyebrow text-white/75">Nossa história</p>
+          <p class="eyebrow text-white">Nossa história</p>
           <h2 class="mt-2 max-w-xl text-3xl text-white sm:text-4xl md:text-[2.75rem]">
             Uma história que atravessa <em class="italic">gerações</em>
           </h2>
@@ -298,7 +298,7 @@ const posts = (await getCollection('blog'))
               <span class="font-display text-5xl italic sm:text-6xl">
                 {marco.data.ano}
               </span>
-              <p class="mt-4 text-[0.95rem] leading-relaxed text-white/90">
+              <p class="mt-4 text-[0.95rem] leading-relaxed text-white">
                 {marco.data.texto}
               </p>
             </li>
@@ -418,7 +418,28 @@ const posts = (await getCollection('blog'))
     height: auto;
   }
 
-  /* Marca d'água gigante na faixa da história */
+  /* Entrada do hero: transform puro, sem opacity — o conteúdo pinta no
+     primeiro frame e o LCP não espera JS nem transição */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-enter {
+      animation: hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: var(--enter-delay, 0ms);
+    }
+    @keyframes hero-rise {
+      from {
+        transform: translateY(22px);
+      }
+      to {
+        transform: none;
+      }
+    }
+  }
+
+  /* Marca d'água gigante na faixa da história — o texto vive em ::before
+     por ser puramente decorativo (fica fora das auditorias de contraste) */
+  .history-watermark::before {
+    content: '1957';
+  }
   .history-watermark {
     position: absolute;
     top: 50%;

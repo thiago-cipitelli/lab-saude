@@ -11,6 +11,9 @@ export default defineConfig({
   trailingSlash: 'always',
   build: {
     format: 'directory',
+    // CSS inline elimina um round-trip render-blocking (~53KB brutos,
+    // ~9KB com Brotli na Vercel) — melhora FCP/LCP no primeiro acesso
+    inlineStylesheets: 'always',
   },
   image: {
     // capas e imagens de corpo dos posts do blog continuam hospedadas no WP
