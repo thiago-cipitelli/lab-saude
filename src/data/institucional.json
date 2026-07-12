@@ -1,0 +1,484 @@
+{
+  "fonte": "https://www.saude.ind.br",
+  "extraidoEm": "2026-07-12T01:54:08.202Z",
+  "home": {
+    "hero": {
+      "slides": [
+        {
+          "titulo": "Como evitar as assaduras em seu bebê",
+          "subtitulo": null,
+          "cta": {
+            "texto": null,
+            "url": "https://www.saude.ind.br/blog/6-dicas-para-evitar-assaduras-em-seu-bebe/"
+          },
+          "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/cruuu.png"
+        },
+        {
+          "titulo": "Saiba mais sobre o Balsamo Allemão de Nohascheck",
+          "subtitulo": null,
+          "cta": {
+            "texto": null,
+            "url": "https://www.saude.ind.br/blog/saiba-mais-sobre-o-balsamo-allemao-de-nohascheck/"
+          },
+          "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/10/balsamo_capa_site.jpg"
+        }
+      ]
+    },
+    "missaoValores": {
+      "titulo": "Desde 1957",
+      "subtitulo": "No que acreditamos",
+      "texto": "O Laboratório Saúde está no ramo farmacêutico há mais de 50 anos e sempre valorizou as tradições e a família. Nossa maior missão é atender todas as gerações, do bebê aos avós, sem esquecer da qualidade e do carinho com nossos clientes. Somos reconhecidos por produtos que moram no coração dos gaúchos e que trazem lembranças da família, da infância e tantos outros momentos marcantes.",
+      "cta": {
+        "texto": "Veja Mais",
+        "url": "https://www.saude.ind.br/quem-somos"
+      }
+    },
+    "blocos": [
+      {
+        "tipo": "destaque",
+        "titulo": "Desde 1957",
+        "subtitulo": "No que acreditamos",
+        "texto": "O Laboratório Saúde está no ramo farmacêutico há mais de 50 anos e sempre valorizou as tradições e a família. Nossa maior missão é atender todas as gerações, do bebê aos avós, sem esquecer da qualidade e do carinho com nossos clientes. Somos reconhecidos por produtos que moram no coração dos gaúchos e que trazem lembranças da família, da infância e tantos outros momentos marcantes.",
+        "cta": {
+          "texto": "Veja Mais",
+          "url": "https://www.saude.ind.br/quem-somos"
+        }
+      },
+      {
+        "tipo": "abasProdutos",
+        "abas": [
+          {
+            "titulo": "Cosméticos",
+            "produtos": [
+              {
+                "titulo": "Creme Calmador Contra Dores",
+                "texto": "Alívio de tensões associadas à fadiga muscular, pancadas e torções.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/creme-calmador-contra-dores/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2022/12/@Lab_Saude_0214-ALT_calmador-contra-dores-creme.png"
+              },
+              {
+                "titulo": "Talco Pó Pelotense Max Fresh",
+                "texto": "Proteção e conforto para pés ativos.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/po-pelotense-max-fresh/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2021/06/Po_Max_Site.png"
+              },
+              {
+                "titulo": "Pó Pelotense",
+                "texto": "Polvilhos que auxiliam nas ações antissépticas, absorventes e secativas.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/po-pelotense/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/Talco-Po_site-1.png"
+              },
+              {
+                "titulo": "Calmador Contra Dores",
+                "texto": "Alívio de tensões associadas à fadiga muscular, pancadas e torções.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/calmador-contra-dores/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/Calmador_cd_site.png"
+              },
+              {
+                "titulo": "Creme Pelotense Baby Preventivo de Assaduras",
+                "texto": "Protege contra assaduras, deixando a pele suave, macia e delicada.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/creme-para-assaduras-pelotense-baby/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/creme-w550h550.png"
+              },
+              {
+                "titulo": "Talco Pelotense Baby",
+                "texto": "Protege contra o atrito e a umidade que podem causar assaduras e irritações, deixando a pele suave, macia e delicadamente perfumada.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/talco-pelotense-baby/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/baby2-w550h550.png"
+              },
+              {
+                "titulo": "Sabonete Pelotense",
+                "texto": "O Sabonete Pelotense é um produto de alta qualidade, formulado com base 100% vegetal, Aloe vera, óleo de amêndoas e manteiga de karité. Esses ingredientes cuidadosamente selecionados colaboram para hidratar, perfumar e proteger a pele de forma eficaz. Além disso, sua fórmula é livre de parabenos, tornando-o uma escolha saudável para o cuidado diário da pele.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/sabonete-pelotense/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/sabonete.jpg"
+              },
+              {
+                "titulo": "Creme Pelotense",
+                "texto": "Hidratante corporal de textura leve e suave",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/creme-pelotense/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/@Lab_Saude_0206-ALT_creme-pelotense.png"
+              },
+              {
+                "titulo": "Creo Cálcio Jobim Spray",
+                "texto": "Aromatizante bucal, indicado para o alívio de sintomas relacionados a gripes, faringites, laringites e afecções bucais.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/creo-calcio-jobim-spray/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/spray-creo-clcio-jobim-w550h550.png"
+              },
+              {
+                "titulo": "Shampoo Piolin Prevent",
+                "texto": "Limpeza suave e segura dos fios.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/shampoo-piolin-prevent/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/piolin-w550h550.png"
+              }
+            ]
+          },
+          {
+            "titulo": "Medicamentos",
+            "produtos": [
+              {
+                "titulo": "Calmador Comprimidos",
+                "texto": "Atua no alívio da enxaqueca e dores de cabeça.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/calmador_comprimidos/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/@Lab_Saude_0256-ALT_calmador-aluminio.png"
+              }
+            ]
+          },
+          {
+            "titulo": "Alimentos",
+            "produtos": [
+              {
+                "titulo": "Nerviton",
+                "texto": "Nerviton é um suplemento alimentar líquido de Vitamina B1 (tiamina).",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/nerviton/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2023/06/Nerviton-1.png"
+              },
+              {
+                "titulo": "Gratia Probatum",
+                "texto": "Suplemento alimentar líquido de Vitamina E.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/gratia-probatum/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/gratia-w550h550.png"
+              },
+              {
+                "titulo": "Creo Cálcio Jobim",
+                "texto": "Suplemento Alimentar de Vitamina C",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/creo-calcio-jobim/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/CREO_XAROPE.png"
+              },
+              {
+                "titulo": "Colometin",
+                "texto": "Suplemento alimentar líquido de Vitamina B3.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/colometin-2/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/colometin-w550h550.png"
+              },
+              {
+                "titulo": "Bálsamo Allemão de Nohascheck",
+                "texto": "Suplemento Alimentar de Vitamina E.",
+                "cta": {
+                  "texto": "Veja Mais",
+                  "url": "https://www.saude.ind.br/produtos/balsamo-allemao-de-nohascheck/"
+                },
+                "imagem": "https://www.saude.ind.br/wp-content/uploads/2020/08/balsamo-w550h550.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tipo": "blogRecentes",
+        "observacao": "Conteúdo dinâmico (últimos posts do blog)",
+        "posts": [
+          {
+            "data": "03/04/2025",
+            "titulo": "Saúde",
+            "url": "https://www.saude.ind.br/blog/saude-8/",
+            "resumo": "Como Identificar e Prevenir Diabetes O diabetes é uma condição crônica que afeta milhões de pessoas em todo o...",
+            "categoria": "Dicas"
+          },
+          {
+            "data": "21/03/2025",
+            "titulo": "Saúde",
+            "url": "https://www.saude.ind.br/blog/saude-7/",
+            "resumo": "Hábitos Saudáveis que Ajudam a Prevenir Doenças Crônicas Adotar hábitos saudáveis é essencial para uma vida...",
+            "categoria": "Dicas"
+          },
+          {
+            "data": "14/02/2025",
+            "titulo": "Saúde",
+            "url": "https://www.saude.ind.br/blog/saude-6/",
+            "resumo": "Efeitos do Excesso de Telas na Saúde Mental O consumo excessivo de conteúdos digitais pode afetar diretamente o...",
+            "categoria": "Dicas"
+          },
+          {
+            "data": "09/01/2025",
+            "titulo": "Saúde",
+            "url": "https://www.saude.ind.br/blog/saude-5/",
+            "resumo": "Benefícios de iniciar o ano com a prática de esportes Começar o ano praticando esportes é uma ótima...",
+            "categoria": "Dicas"
+          },
+          {
+            "data": "20/12/2024",
+            "titulo": "Festas de Final de Ano",
+            "url": "https://www.saude.ind.br/blog/festas-de-final-de-ano/",
+            "resumo": "Dicas Para Aproveitar as Festas de Final de Ano As festas de final de ano são aguardadas por muitos como...",
+            "categoria": "Dicas"
+          },
+          {
+            "data": "12/12/2024",
+            "titulo": "Saúde",
+            "url": "https://www.saude.ind.br/blog/saude-10-12/",
+            "resumo": "Os Benefícios da Vitamina E: Essencial para a Saúde e a Beleza A Vitamina E é um poderoso antioxidante...",
+            "categoria": "Dicas"
+          }
+        ]
+      }
+    ]
+  },
+  "quemSomos": {
+    "titulo": "Quem Somos",
+    "blocos": [
+      {
+        "tipo": "texto",
+        "titulo": null,
+        "texto": "O Laboratório Saúde está no ramo farmacêutico há mais de 60 anos e somos reconhecidos por produtos que moram no coração dos gaúchos e, que trazem sentimentos de nostalgia e confiabilidade. Nosso maior dever é atender todas as gerações, do bebê aos mais velhos, sem esquecer da qualidade e do carinho com nossos clientes."
+      },
+      {
+        "tipo": "texto",
+        "titulo": "Missão",
+        "texto": "Produzir e comercializar medicamentos isentos de prescrição médica, cosméticos e alimentos funcionais, fortalecendo suas marcas junto ao mercado nacional."
+      },
+      {
+        "tipo": "texto",
+        "titulo": "Visão",
+        "texto": "Ser uma empresa de crescimento sustentável, fundamentada em colaboradores valorizados e comprometidos e marcas reconhecidas."
+      },
+      {
+        "tipo": "galeria",
+        "imagens": [
+          {
+            "url": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/01-fachada.jpg",
+            "legenda": "Fachada"
+          },
+          {
+            "url": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/02-manutencao.jpg",
+            "legenda": "Manutenção"
+          },
+          {
+            "url": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/03-quiosque.jpg",
+            "legenda": "Quiosque"
+          },
+          {
+            "url": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/04-deposito.png",
+            "legenda": "Depósito"
+          },
+          {
+            "url": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/05-producao.png",
+            "legenda": "Produção"
+          }
+        ]
+      },
+      {
+        "tipo": "texto",
+        "titulo": "Endereço",
+        "texto": "Rua Voluntários da Pátria, 3969 Navegantes, Porto Alegre/RS CEP 90230-020"
+      }
+    ]
+  },
+  "sac": {
+    "titulo": "SAC",
+    "textoIntro": null,
+    "formulario": {
+      "titulo": "SAC",
+      "campos": [
+        {
+          "name": "nome",
+          "label": "Nome*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "email",
+          "label": "E-mail*",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "sobrenome",
+          "label": "Sobrenome*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "telefone",
+          "label": "Telefone*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "assunto",
+          "label": "Selecione...",
+          "type": "select",
+          "required": false,
+          "opcoes": [
+            {
+              "label": "Selecione...",
+              "value": "contato@saude.ind.br"
+            },
+            {
+              "label": "Marketing",
+              "value": "marketing@saude.ind.br"
+            },
+            {
+              "label": "Qualidade",
+              "value": "sac@saude.ind.br"
+            },
+            {
+              "label": "Suprimentos",
+              "value": "suprimentos@saude.ind.br"
+            },
+            {
+              "label": "Vendas",
+              "value": "vendas@saude.ind.br"
+            },
+            {
+              "label": "Financeiro",
+              "value": "financeiro@saude.ind.br"
+            }
+          ]
+        },
+        {
+          "name": "msg",
+          "label": "Mensagem",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "name": "uploaded_file",
+          "label": null,
+          "type": "file",
+          "required": false,
+          "accept": "pdf doc jpeg png gif",
+          "nota": "Apenas arquivos PDF, DOC, JPEG, PNG e GIF são aceitos."
+        }
+      ],
+      "botaoEnviar": "Enviar"
+    }
+  },
+  "trabalheConosco": {
+    "titulo": "Trabalhe Conosco",
+    "textoIntro": null,
+    "formulario": {
+      "titulo": "Trabalhe Conosco",
+      "campos": [
+        {
+          "name": "nome",
+          "label": "Nome*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "email",
+          "label": "E-mail*",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "sobrenome",
+          "label": "Sobrenome*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "telefone",
+          "label": "Telefone*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "area",
+          "label": "Área de Interesse*",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "msg",
+          "label": "Mensagem",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "name": "file",
+          "label": "Envie seu currículo *",
+          "type": "file",
+          "required": true,
+          "accept": "pdf doc",
+          "nota": "Apenas arquivos PDF e DOC são aceitos."
+        }
+      ],
+      "botaoEnviar": "Enviar"
+    },
+    "uploadCurriculo": true
+  },
+  "contato": {
+    "telefone": "+55 51 3024 4422",
+    "email": "contato@saude.ind.br",
+    "emailsDepartamentos": [
+      {
+        "departamento": "Marketing",
+        "email": "marketing@saude.ind.br"
+      },
+      {
+        "departamento": "Qualidade",
+        "email": "sac@saude.ind.br"
+      },
+      {
+        "departamento": "Suprimentos",
+        "email": "suprimentos@saude.ind.br"
+      },
+      {
+        "departamento": "Vendas",
+        "email": "vendas@saude.ind.br"
+      },
+      {
+        "departamento": "Financeiro",
+        "email": "financeiro@saude.ind.br"
+      }
+    ],
+    "endereco": "Rua Voluntários da Pátria, 3969 Navegantes, Porto Alegre/RS CEP 90230-020",
+    "redesSociais": [
+      {
+        "rede": "facebook",
+        "url": "http://fb.com/laboratoriosaudeltda/"
+      },
+      {
+        "rede": "youtube",
+        "url": "https://www.youtube.com/channel/UCzLADS2YBa10QkHYANADXyA"
+      }
+    ]
+  },
+  "lojaUrl": "https://sadestore.commercesuite.com.br/"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    }
+  ],
+  "redirects": [
+    { "source": "/sitemap_index.xml", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/post-sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/page-sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/produtos-sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/categorias-sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true }
+  ]
+}

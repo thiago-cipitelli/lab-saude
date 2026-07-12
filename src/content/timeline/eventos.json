@@ -1,0 +1,87 @@
+[
+  {
+    "ano": "1957",
+    "titulo": null,
+    "texto": "Günter Nunnenkamp junto com Carlos Hoerlle fundam o laboratório Saúde em Porto Alegre/RS, trazendo para o mercado nacional o produto antisséptico Bálsamo Allemão de Nohascheck.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/01.png"
+  },
+  {
+    "ano": "1965",
+    "titulo": null,
+    "texto": "Com a aquisição do Pó Pelotense, Günter Nunnenkamp funda o laboratório Quimsul.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/02.png"
+  },
+  {
+    "ano": "1975",
+    "titulo": null,
+    "texto": "O laboratório Quimsul adquire o produto analgésico Calmador e lança o Creme hidratante Pelotense.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/03.png"
+  },
+  {
+    "ano": "1977",
+    "titulo": null,
+    "texto": "O laboratório Saúde transfere sua sede para Comendador Tavares em Porto Alegre/RS e o laboratório Quimsul transfere sua sede para Voluntários da Pátria, também, em Porto Alegre/RS.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/01-fachada.jpg",
+    "imagens": [
+      "https://www.saude.ind.br/wp-content/themes/tezus/imgs/01-fachada.jpg",
+      "https://www.saude.ind.br/wp-content/themes/tezus/imgs/02-manutencao.jpg",
+      "https://www.saude.ind.br/wp-content/themes/tezus/imgs/03-quiosque.jpg",
+      "https://www.saude.ind.br/wp-content/themes/tezus/imgs/04-deposito.png",
+      "https://www.saude.ind.br/wp-content/themes/tezus/imgs/05-producao.png"
+    ]
+  },
+  {
+    "ano": "1984",
+    "titulo": null,
+    "texto": "O laboratório Quimsul lança o digestivo Amargol.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/04.png"
+  },
+  {
+    "ano": "2002",
+    "titulo": null,
+    "texto": "O laboratório Saúde adquire as licenças dos produtos do laboratório Sibras. Entre eles, digestivo Infalivina e o shampoo medicamento Piolin.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/05.png"
+  },
+  {
+    "ano": "2005",
+    "titulo": null,
+    "texto": "O Laboratório Quimsul é incorporado ao Laboratório Saúde.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/saude.png"
+  },
+  {
+    "ano": "2010",
+    "titulo": null,
+    "texto": "O laboratório Saúde lança o desodorante para os pés Max Fresh.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/06.png"
+  },
+  {
+    "ano": "2012",
+    "titulo": null,
+    "texto": "Talco Pelotense Baby é lançado, dando início a linha voltada para o cuidado infantil.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/talco-pelotense-baby.png"
+  },
+  {
+    "ano": "2013",
+    "titulo": null,
+    "texto": "O laboratório Saúde adquire as licenças dos produtos do laboratório Sanifer. Entre eles, o xarope Creo Cálcio Jobim e o digestivo Colometin. Neste mesmo ano, o digestivo Infalivina volta a ser comercializado.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/07.png"
+  },
+  {
+    "ano": "2014",
+    "titulo": null,
+    "texto": "O laboratório Saúde compra a licença e começa a comercializar o antisséptico Gratia Probatum. Neste mesmo ano, os produtos Max Fresh e o talco Pó Pelotense têm suas linhas ampliadas com apresentação em aerossol jato seco.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/08.png"
+  },
+  {
+    "ano": "2015",
+    "titulo": null,
+    "texto": "O laboratório Saúde lança o primeiro shampoo para prevenção de piolhos do mercado, o shampoo Piolin Prevent.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/09.png"
+  },
+  {
+    "ano": "2018",
+    "titulo": null,
+    "texto": "Lançamento do Calmador Contra Dores para dores musculares, e o Creo Cálcio Jobim versão spray para garganta.",
+    "imagem": "https://www.saude.ind.br/wp-content/themes/tezus/imgs/Calmador.png"
+  }
+]
