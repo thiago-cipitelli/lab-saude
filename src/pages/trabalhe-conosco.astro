@@ -19,7 +19,6 @@ const formulario = institucional.trabalheConosco.formulario as unknown as {
 };
 
 const campo = (name: string) => formulario.campos.find((c) => c.name === name);
-// O asterisco do label original vira o marcador de obrigatório do FormField
 const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/, '');
 ---
 
@@ -44,7 +43,6 @@ const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/,
         data-reveal
         style="--reveal-delay: 90ms"
       >
-        <!-- Copy exato da Visão em institucional.json (quemSomos.blocos) -->
         <blockquote class="font-display text-xl leading-snug italic sm:text-2xl">
           “Ser uma empresa de crescimento sustentável, fundamentada em <em
             class="underline decoration-white/60 decoration-2 underline-offset-4"

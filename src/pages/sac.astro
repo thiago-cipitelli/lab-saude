@@ -21,10 +21,8 @@ const formulario = institucional.sac.formulario as unknown as {
 };
 
 const campo = (name: string) => formulario.campos.find((c) => c.name === name);
-// O asterisco do label original vira o marcador de obrigatório do FormField
 const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/, '');
 
-// Opções reais do cliente; o primeiro item vira placeholder com value vazio
 const assuntoOptions = (campo('assunto')?.opcoes ?? []).map((opt, i) => ({
   label: opt.label,
   value: i === 0 ? '' : opt.value,

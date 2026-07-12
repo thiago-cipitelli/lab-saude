@@ -26,7 +26,6 @@ const categorias = CATEGORIAS.map((cat) => ({
   total: produtos.filter((p) => p.data.category === cat.nome).length,
 }));
 
-// Acentos secundários usados com parcimônia: um por categoria
 const acentoCategoria: Record<string, string> = {
   cosmeticos: 'text-brand',
   medicamentos: 'text-teal',
@@ -50,10 +49,8 @@ const posts = (await getCollection('blog'))
     <div
       class="container-site grid items-center gap-14 py-14 md:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:py-24"
     >
-      {/* O hero nunca nasce com opacity 0 (arruinaria o LCP): a entrada usa
-          animação CSS só de transform, que pinta já no primeiro frame */}
       <div>
-        <p class="eyebrow hero-enter">Farmacêutica gaúcha · Desde 1957</p>
+        <p class="eyebrow hero-enter"> Laboratório Saúde · Desde 1957</p>
         <h1
           class="hero-enter mt-4 text-[2.75rem] leading-[1.04] text-ink sm:text-6xl xl:text-[4.5rem]"
           style="--enter-delay: 90ms"
@@ -418,8 +415,6 @@ const posts = (await getCollection('blog'))
     height: auto;
   }
 
-  /* Entrada do hero: transform puro, sem opacity — o conteúdo pinta no
-     primeiro frame e o LCP não espera JS nem transição */
   @media (prefers-reduced-motion: no-preference) {
     .hero-enter {
       animation: hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -435,8 +430,6 @@ const posts = (await getCollection('blog'))
     }
   }
 
-  /* Marca d'água gigante na faixa da história — o texto vive em ::before
-     por ser puramente decorativo (fica fora das auditorias de contraste) */
   .history-watermark::before {
     content: '1957';
   }
