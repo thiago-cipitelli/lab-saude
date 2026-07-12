@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormField from '../components/FormField.astro';
+import { SITE } from '../lib/site';
+import institucional from '../data/institucional.json';
+
+type Campo = {
+  name: string;
+  label: string | null;
+  type: string;
+  required: boolean;
+  opcoes?: Array<{ label: string; value: string }>;
+  accept?: string;
+  nota?: string;
+};
+
+const formulario = institucional.sac.formulario as unknown as {
+  titulo: string;
+  campos: Campo[];
+  botaoEnviar: string;
+};
+
+const campo = (name: string) => formulario.campos.find((c) => c.name === name);
+// O asterisco do label original vira o marcador de obrigatório do FormField
+const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/, '');
+
+// Opções reais do cliente; o primeiro item vira placeholder com value vazio
+const assuntoOptions = (campo('assunto')?.opcoes ?? []).map((opt, i) => ({
+  label: opt.label,
+  value: i === 0 ? '' : opt.value,
+}));
+
+const telHref = `tel:${SITE.contato.telefone.replace(/[^+\d]/g, '')}`;
+---
+
+<BaseLayout
+  title="SAC"
+  description="Fale com o Laboratório Saúde: telefone, e-mail, endereço e formulário de atendimento ao consumidor."
+>
+  <section
+    class="container-site grid items-start gap-12 py-16 md:py-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20 lg:py-24"
+  >
+    <!-- Coluna de contato -->
+    <div data-reveal class="lg:sticky lg:top-28 lg:self-start">
+      <p class="eyebrow">Atendimento ao consumidor</p>
+      <h1 class="mt-3 text-5xl sm:text-6xl">SAC</h1>
+      <p class="mt-6 max-w-md text-lg text-ink-soft">
+        Fale com a gente — <em class="font-display italic text-ink">queremos te ouvir</em>. Dúvida,
+        sugestão ou elogio: toda mensagem é lida com atenção e carinho.
+      </p>
+
+      <dl class="mt-10 space-y-6 border-t border-line pt-8">
+        <div>
+          <dt class="text-xs font-bold tracking-[0.2em] text-ink-soft uppercase">Telefone</dt>
+          <dd class="mt-1">
+            <a
+              href={telHref}
+              class="text-lg font-medium text-ink transition-colors hover:text-brand"
+            >
+              {SITE.contato.telefone}
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt class="text-xs font-bold tracking-[0.2em] text-ink-soft uppercase">E-mail</dt>
+          <dd class="mt-1">
+            <a
+              href={`mailto:${SITE.contato.email}`}
+              class="text-lg font-medium text-ink transition-colors hover:text-brand"
+            >
+              {SITE.contato.email}
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt class="text-xs font-bold tracking-[0.2em] text-ink-soft uppercase">Endereço</dt>
+          <dd class="mt-1 max-w-xs text-ink-soft">{SITE.endereco}</dd>
+        </div>
+      </dl>
+
+      <div class="mt-10 border-t border-line pt-8">
+        <h2 class="font-sans text-xs font-bold tracking-[0.2em] text-ink-soft uppercase">
+          E-mails por departamento
+        </h2>
+        <ul class="mt-4">
+          {
+            SITE.contato.emailsDepartamentos.map((dep) => (
+              <li class="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line/70 py-2.5 text-sm last:border-b-0">
+                <span class="font-medium text-ink">{dep.departamento}</span>
+                <a
+                  href={`mailto:${dep.email}`}
+                  class="text-ink-soft transition-colors hover:text-brand"
+                >
+                  {dep.email}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Formulário -->
+    <div
+      class="rounded-2xl bg-white p-6 shadow-card sm:p-8 lg:p-10"
+      data-reveal
+      style="--reveal-delay: 120ms"
+    >
+      <h2 class="text-2xl sm:text-3xl">Envie sua <em class="italic">mensagem</em></h2>
+      <p class="mt-2 text-sm text-ink-soft">
+        Campos marcados com <span class="text-brand">*</span> são obrigatórios.
+      </p>
+
+      <!-- INTEGRAÇÃO REAL PÓS-APROVAÇÃO: apontar para provedor de forms (Web3Forms/função serverless) -->
+      <form id="form-sac" class="mt-8 space-y-5">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <FormField name="nome" label={rotulo('nome')} required />
+          <FormField name="sobrenome" label={rotulo('sobrenome')} required />
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <FormField name="email" label={rotulo('email')} type="email" required />
+          <FormField name="telefone" label={rotulo('telefone')} type="tel" required />
+        </div>
+        <FormField name="assunto" label="Assunto" type="select" options={assuntoOptions} />
+        <FormField name="msg" label={rotulo('msg')} type="textarea" required />
+        <FormField
+          name="uploaded_file"
+          label="Anexo (opcional)"
+          type="file"
+          accept=".pdf,.doc,.jpeg,.jpg,.png,.gif"
+          hint={campo('uploaded_file')?.nota}
+        />
+
+        <div class="pt-2">
+          <button type="submit" class="btn btn-primary">{formulario.botaoEnviar}</button>
+        </div>
+
+        <p
+          id="status-sac"
+          role="status"
+          hidden
+          class="flex items-start gap-2 rounded-xl border border-teal/40 bg-teal-wash px-4 py-3 text-sm font-medium text-ink"
+        >
+          <span class="text-teal" aria-hidden="true">✓</span>
+          <span>Demonstração — o envio será ativado na versão final.</span>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // Demonstração visual: intercepta o envio e mostra a confirmação inline.
+    const form = document.getElementById('form-sac');
+    const status = document.getElementById('status-sac');
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (status) {
+        status.hidden = false;
+        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+
+    // Primeira opção do assunto age como placeholder (disabled + selected)
+    const placeholder = document.querySelector<HTMLOptionElement>(
+      '#campo-assunto option[value=""]',
+    );
+    if (placeholder) {
+      placeholder.disabled = true;
+      placeholder.selected = true;
+    }
+  </script>
+</BaseLayout>

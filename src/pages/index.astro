@@ -1,11 +1,434 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../lib/site';
+import SectionHeading from '../components/SectionHeading.astro';
+import Stamp from '../components/Stamp.astro';
+import ProductCard from '../components/ProductCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { SITE, CATEGORIAS } from '../lib/site';
+import institucional from '../data/institucional.json';
+import poPelotense from '../assets/produtos/po-pelotense.png';
+import calmador from '../assets/produtos/calmador-contra-dores.png';
+import fotoFachada from '../assets/theme/imgs/01-fachada.jpg';
+import fotoQuiosque from '../assets/theme/imgs/03-quiosque.jpg';
+import fotoProducao from '../assets/theme/imgs/05-producao.png';
+
+const missao = institucional.home.missaoValores;
+
+const produtos = (await getCollection('produtos')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const destaques = produtos.slice(0, 8);
+
+const categorias = CATEGORIAS.map((cat) => ({
+  ...cat,
+  total: produtos.filter((p) => p.data.category === cat.nome).length,
+}));
+
+// Acentos secundários usados com parcimônia: um por categoria
+const acentoCategoria: Record<string, string> = {
+  cosmeticos: 'text-brand',
+  medicamentos: 'text-teal',
+  alimentos: 'text-orange',
+};
+
+const timeline = (await getCollection('timeline')).sort(
+  (a, b) => Number(a.data.ano) - Number(b.data.ano),
+);
+const anosMarcos = ['1957', '1965', '1975', '2018'];
+const marcos = timeline.filter((e) => anosMarcos.includes(e.data.ano));
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
 
-<BaseLayout title={SITE.name}>
-  <section class="container-site py-24">
-    <p class="eyebrow">Desde 1957</p>
-    <h1 class="mt-3 text-5xl">Página provisória</h1>
+<BaseLayout title={SITE.name} description={SITE.description}>
+  <!-- ========== HERO ========== -->
+  <section class="relative overflow-hidden">
+    <div
+      class="container-site grid items-center gap-14 py-14 md:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:py-24"
+    >
+      <div>
+        <p class="eyebrow" data-reveal>Farmacêutica gaúcha · Desde 1957</p>
+        <h1
+          class="mt-4 text-[2.75rem] leading-[1.04] text-ink sm:text-6xl xl:text-[4.5rem]"
+          data-reveal
+          style="--reveal-delay: 90ms"
+        >
+          Produtos que moram no <em class="italic text-brand">coração</em> dos gaúchos
+        </h1>
+        <p
+          class="mt-6 max-w-xl text-lg text-ink-soft sm:text-xl"
+          data-reveal
+          style="--reveal-delay: 180ms"
+        >
+          Do bebê aos avós, qualidade e carinho desde 1957.
+        </p>
+        <div
+          class="mt-9 flex flex-wrap items-center gap-4"
+          data-reveal
+          style="--reveal-delay: 270ms"
+        >
+          <a href="/produtos/" class="btn btn-primary">Conhecer os produtos</a>
+          <a href={SITE.lojaUrl} target="_blank" rel="noopener" class="btn btn-outline">
+            Comprar na loja online
+          </a>
+        </div>
+      </div>
+
+      <!-- Composição gráfica: arco de botica + produtos ícone + selo -->
+      <div
+        class="relative mx-auto w-full max-w-[24rem] lg:max-w-[27rem]"
+        data-reveal
+        style="--reveal-delay: 160ms"
+      >
+        <div class="relative aspect-[4/5] w-full">
+          <span
+            aria-hidden="true"
+            class="absolute -top-8 -left-10 size-36 rounded-full border-[1.5px] border-brand/20"
+          ></span>
+
+          <div class="hero-arch absolute inset-x-0 bottom-0 h-[86%]"></div>
+
+          <Image
+            src={poPelotense}
+            alt="Pó Pelotense"
+            width={480}
+            densities={[1, 2]}
+            loading="eager"
+            class="absolute bottom-[7%] left-1/2 z-10 w-[56%] -translate-x-1/2 drop-shadow-[0_30px_30px_rgb(44_35_32/0.30)]"
+          />
+          <Image
+            src={calmador}
+            alt="Calmador Contra Dores"
+            width={300}
+            densities={[1, 2]}
+            loading="eager"
+            class="hero-float absolute bottom-[4%] -left-[9%] z-20 w-[38%] drop-shadow-[0_22px_24px_rgb(44_35_32/0.28)]"
+          />
+
+          <div class="absolute top-[4%] -right-6 z-30 hidden sm:block">
+            <Stamp class="text-brand" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LETREIRO DE PRODUTOS (decorativo) ========== -->
+  <div class="marquee border-y border-line bg-white/60 py-3.5" aria-hidden="true">
+    {
+      [0, 1].map(() => (
+        <div class="marquee-track">
+          {produtos.map((p) => (
+            <Fragment>
+              <span class="font-display text-lg whitespace-nowrap text-ink-soft italic">
+                {p.data.title}
+              </span>
+              <span class="size-1.5 shrink-0 rounded-full bg-brand/70" />
+            </Fragment>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- ========== CATEGORIAS ========== -->
+  <section class="container-site py-16 md:py-24">
+    <h2 class="sr-only">Categorias de produtos</h2>
+    <p class="eyebrow" data-reveal>Explore por categoria</p>
+    <div class="mt-6 grid gap-5 sm:grid-cols-3">
+      {
+        categorias.map((cat, i) => (
+          <a
+            href={`/categorias/${cat.slug}/`}
+            class="group relative flex flex-col rounded-2xl bg-white p-8 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
+            data-reveal
+            style={`--reveal-delay: ${i * 90}ms`}
+          >
+            <span
+              class:list={[
+                'font-display text-5xl leading-none italic',
+                acentoCategoria[cat.slug],
+              ]}
+            >
+              {cat.total}
+            </span>
+            <span class="mt-2 text-xs font-bold tracking-[0.18em] text-ink-soft uppercase">
+              {cat.total === 1 ? 'produto' : 'produtos'}
+            </span>
+            <h3 class="mt-7 text-2xl text-ink transition-colors group-hover:text-brand">
+              {cat.nome}
+            </h3>
+            <span class="mt-3 flex items-center gap-1.5 text-sm font-medium text-brand">
+              Explorar categoria
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                class="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                <path
+                  d="M2 7h10m0 0L8 3m4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ========== NO QUE ACREDITAMOS ========== -->
+  <section class="container-site py-16 md:py-24">
+    <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+      <!-- Colagem de fotos institucionais -->
+      <div class="relative mx-auto w-full max-w-md lg:max-w-none" data-reveal>
+        <div class="relative pt-8 pb-16">
+          <Image
+            src={fotoFachada}
+            alt="Fachada do Laboratório Saúde"
+            width={720}
+            densities={[1, 2]}
+            loading="lazy"
+            class="collage-photo w-[82%] -rotate-2"
+          />
+          <Image
+            src={fotoProducao}
+            alt="Linha de produção do Laboratório Saúde"
+            width={360}
+            densities={[1, 2]}
+            loading="lazy"
+            class="collage-photo absolute top-0 right-0 w-[44%] rotate-2"
+          />
+          <Image
+            src={fotoQuiosque}
+            alt="Quiosque do Laboratório Saúde"
+            width={400}
+            densities={[1, 2]}
+            loading="lazy"
+            class="collage-photo absolute right-8 bottom-0 w-[46%] -rotate-3"
+          />
+          <span
+            class="absolute bottom-6 left-0 -rotate-2 rounded-full bg-paper-deep px-4 py-1.5 text-xs font-bold tracking-[0.16em] text-ink-soft uppercase shadow-card"
+          >
+            Porto Alegre · RS
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <p class="eyebrow" data-reveal>{missao.titulo}</p>
+        <h2
+          class="mt-2 text-3xl text-ink sm:text-4xl md:text-[2.75rem]"
+          data-reveal
+          style="--reveal-delay: 80ms"
+        >
+          No que <em class="italic text-brand">acreditamos</em>
+        </h2>
+        <p
+          class="mt-5 text-lg leading-relaxed text-ink-soft"
+          data-reveal
+          style="--reveal-delay: 160ms"
+        >
+          {missao.texto}
+        </p>
+        <div class="mt-8" data-reveal style="--reveal-delay: 240ms">
+          <a href="/quem-somos/" class="btn btn-outline">{missao.cta.texto}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRODUTOS EM DESTAQUE ========== -->
+  <section class="container-site py-16 md:py-24">
+    <SectionHeading eyebrow="Nossos produtos" title="Produtos em destaque">
+      Do cuidado com o bebê ao bem-estar dos avós — os clássicos da nossa
+      prateleira.
+    </SectionHeading>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        destaques.map((produto, i) => (
+          <ProductCard produto={produto} index={i} eager={i < 4} />
+        ))
+      }
+    </div>
+    <div class="mt-12 text-center" data-reveal>
+      <a href="/produtos/" class="btn btn-outline">Ver todos os produtos</a>
+    </div>
+  </section>
+
+  <!-- ========== TEASER DA HISTÓRIA ========== -->
+  <section class="relative overflow-hidden bg-brand text-white">
+    <span aria-hidden="true" class="history-watermark select-none">1957</span>
+    <div class="container-site relative py-20 md:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-8">
+        <div data-reveal>
+          <p class="eyebrow text-white/75">Nossa história</p>
+          <h2 class="mt-2 max-w-xl text-3xl text-white sm:text-4xl md:text-[2.75rem]">
+            Uma história que atravessa <em class="italic">gerações</em>
+          </h2>
+        </div>
+        <a
+          href="/linha-do-tempo/"
+          class="btn bg-white text-brand shadow-card transition-all hover:-translate-y-0.5 hover:bg-paper hover:shadow-card-hover"
+          data-reveal
+          style="--reveal-delay: 120ms"
+        >
+          Percorrer a linha do tempo
+        </a>
+      </div>
+
+      <ol class="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          marcos.map((marco, i) => (
+            <li
+              class="border-t border-white/30 pt-6"
+              data-reveal
+              style={`--reveal-delay: ${i * 90}ms`}
+            >
+              <span class="font-display text-5xl italic sm:text-6xl">
+                {marco.data.ano}
+              </span>
+              <p class="mt-4 text-[0.95rem] leading-relaxed text-white/90">
+                {marco.data.texto}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ========== BLOG ========== -->
+  <section class="container-site py-16 md:py-24">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <SectionHeading eyebrow="Blog" title="Direto do blog">
+        Dicas de saúde e novidades do Laboratório Saúde.
+      </SectionHeading>
+      <a
+        href="/blog/"
+        class="btn btn-ghost"
+        data-reveal
+        style="--reveal-delay: 120ms"
+      >
+        Ver todas as publicações
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M2 7h10m0 0L8 3m4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {posts.map((post, i) => <BlogCard post={post} index={i} />)}
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* Arco de botica: nicho vermelho onde os produtos "moram" */
+  .hero-arch {
+    border-radius: 999px 999px 1.5rem 1.5rem;
+    background: linear-gradient(
+      165deg,
+      var(--color-brand) 15%,
+      var(--color-brand-deep) 95%
+    );
+  }
+  .hero-arch::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: radial-gradient(
+      rgb(255 255 255 / 0.16) 1px,
+      transparent 1.4px
+    );
+    background-size: 16px 16px;
+    mask-image: linear-gradient(to bottom, black, transparent 70%);
+  }
+
+  /* Flutuação suave do produto secundário no hero */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-float {
+      animation: hero-float 7s ease-in-out infinite;
+    }
+  }
+  @keyframes hero-float {
+    0%,
+    100% {
+      transform: rotate(-7deg) translateY(0);
+    }
+    50% {
+      transform: rotate(-5deg) translateY(-10px);
+    }
+  }
+
+  /* Letreiro contínuo com os nomes dos produtos */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 2.5rem;
+    min-width: 100%;
+    padding-right: 2.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee-track {
+      animation: marquee-scroll 60s linear infinite;
+    }
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes marquee-scroll {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Fotos institucionais em colagem, com moldura branca */
+  .collage-photo {
+    border-radius: 0.75rem;
+    border: 6px solid #fff;
+    box-shadow: var(--shadow-card-hover);
+    height: auto;
+  }
+
+  /* Marca d'água gigante na faixa da história */
+  .history-watermark {
+    position: absolute;
+    top: 50%;
+    right: -0.05em;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(11rem, 28vw, 22rem);
+    line-height: 1;
+    color: rgb(255 255 255 / 0.07);
+    pointer-events: none;
+  }
+</style>

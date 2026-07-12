@@ -1,0 +1,202 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import institucional from '../data/institucional.json';
+import fachada from '../assets/theme/imgs/01-fachada.jpg';
+import manutencao from '../assets/theme/imgs/02-manutencao.jpg';
+import quiosque from '../assets/theme/imgs/03-quiosque.jpg';
+import deposito from '../assets/theme/imgs/04-deposito.png';
+import producao from '../assets/theme/imgs/05-producao.png';
+
+type Bloco = {
+  tipo: string;
+  titulo?: string | null;
+  texto?: string;
+  imagens?: Array<{ url: string; legenda: string }>;
+};
+
+const blocos = institucional.quemSomos.blocos as Bloco[];
+const intro = blocos.find((b) => b.tipo === 'texto' && !b.titulo)!;
+const missao = blocos.find((b) => b.titulo === 'Missão')!;
+const visao = blocos.find((b) => b.titulo === 'Visão')!;
+const galeria = blocos.find((b) => b.tipo === 'galeria')!;
+const enderecoBloco = blocos.find((b) => b.titulo === 'Endereço')!;
+
+// Copy exato do cliente, apenas com ênfase tipográfica na expressão-chave
+const introHtml = (intro.texto ?? '').replace(
+  'moram no coração dos gaúchos',
+  '<em class="italic">moram no coração dos gaúchos</em>',
+);
+
+// As fotos da galeria existem localmente (mesmos arquivos do tema atual)
+const fotosLocais: Record<string, ImageMetadata> = {
+  Fachada: fachada,
+  Manutenção: manutencao,
+  Quiosque: quiosque,
+  Depósito: deposito,
+  Produção: producao,
+};
+const galeriaFotos = (galeria.imagens ?? [])
+  .map((img) => ({ legenda: img.legenda, foto: fotosLocais[img.legenda] }))
+  .filter((f) => Boolean(f.foto));
+
+const mapsUrl =
+  'https://maps.google.com/?q=Rua+Voluntários+da+Pátria+3969+Porto+Alegre';
+---
+
+<BaseLayout
+  title="Quem Somos"
+  description="O Laboratório Saúde está no ramo farmacêutico há mais de 60 anos e somos reconhecidos por produtos que moram no coração dos gaúchos e, que trazem sentimentos de nostalgia e confiabilidade."
+>
+  <section class="container-site pt-16 pb-16 md:pt-24 md:pb-20">
+    <div class="max-w-3xl" data-reveal>
+      <p class="eyebrow">Desde 1957</p>
+      <h1 class="mt-3 text-5xl sm:text-6xl md:text-7xl">
+        Quem <em class="italic">Somos</em>
+      </h1>
+    </div>
+
+    <div
+      class="mt-10 max-w-3xl border-l-2 border-brand pl-6 md:mt-14 md:pl-8"
+      data-reveal
+      style="--reveal-delay: 120ms"
+    >
+      <p
+        class="lede font-display text-2xl leading-snug text-ink sm:text-[1.75rem] md:text-3xl"
+        set:html={introHtml}
+      />
+      <a href="/linha-do-tempo/" class="btn btn-ghost mt-6 -ml-4">
+        Conheça nossa história <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="container-site pb-20 md:pb-24" aria-label="Missão e Visão">
+    <div class="grid gap-6 md:grid-cols-2">
+      <div
+        class="rounded-2xl border-t-4 border-teal bg-white p-8 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+        data-reveal
+      >
+        <span
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-teal-wash text-teal"
+          aria-hidden="true"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-5 w-5"
+          >
+            <circle cx="12" cy="12" r="8"></circle>
+            <circle cx="12" cy="12" r="3.5"></circle>
+            <circle cx="12" cy="12" r="0.75" fill="currentColor"></circle>
+          </svg>
+        </span>
+        <h2 class="mt-5 text-2xl sm:text-3xl">{missao.titulo}</h2>
+        <p class="mt-3 text-ink-soft">{missao.texto}</p>
+      </div>
+
+      <div
+        class="rounded-2xl border-t-4 border-orange bg-white p-8 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+        data-reveal
+        style="--reveal-delay: 90ms"
+      >
+        <span
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-orange/10 text-orange"
+          aria-hidden="true"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-5 w-5"
+          >
+            <path
+              d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"
+            ></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </span>
+        <h2 class="mt-5 text-2xl sm:text-3xl">{visao.titulo}</h2>
+        <p class="mt-3 text-ink-soft">{visao.texto}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-site pb-20 md:pb-24">
+    <SectionHeading eyebrow="Nossa estrutura" title="Por dentro do Laboratório" />
+
+    <div class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
+      {
+        galeriaFotos.map(({ legenda, foto }, i) => (
+          <figure
+            class:list={[
+              'group relative overflow-hidden rounded-2xl shadow-card',
+              i === 0 && 'col-span-2 sm:row-span-2',
+            ]}
+            data-reveal
+            style={`--reveal-delay: ${i * 80}ms`}
+          >
+            <Image
+              src={foto}
+              alt={`${legenda} do Laboratório Saúde`}
+              width={i === 0 ? 1400 : 700}
+              class:list={[
+                'h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]',
+                i === 0 ? 'aspect-[16/10] sm:aspect-auto' : 'aspect-[4/3]',
+              ]}
+              loading="lazy"
+            />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/75 to-transparent px-4 pt-10 pb-3 text-sm font-medium text-white">
+              {legenda}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container-site pb-24">
+    <div
+      class="rounded-2xl bg-white shadow-card md:grid md:grid-cols-[1fr_auto] md:items-center"
+      data-reveal
+    >
+      <div class="p-8 sm:p-10">
+        <p class="eyebrow">Onde estamos</p>
+        <h2 class="mt-2 text-3xl">{enderecoBloco.titulo}</h2>
+        <address class="mt-4 max-w-md text-lg text-ink-soft not-italic">
+          {enderecoBloco.texto}
+        </address>
+      </div>
+      <div class="px-8 pb-8 sm:px-10 sm:pb-10 md:p-10">
+        <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-4 w-4"
+            aria-hidden="true"
+          >
+            <path d="M12 21s-7-5.2-7-11a7 7 0 1 1 14 0c0 5.8-7 11-7 11Z"></path>
+            <circle cx="12" cy="10" r="2.6"></circle>
+          </svg>
+          Ver no Google Maps
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Lede editorial: Fraunces em tamanho de exibição, peso levemente reforçado */
+  .lede {
+    font-weight: 420;
+    font-variation-settings: 'opsz' 40;
+    text-wrap: balance;
+  }
+</style>

@@ -63,4 +63,4 @@ const organizationSchema = {
 <meta name="twitter:description" content={description} />
 {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

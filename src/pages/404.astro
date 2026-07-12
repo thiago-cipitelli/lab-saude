@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Stamp from '../components/Stamp.astro';
+---
+
+<BaseLayout
+  title="Página não encontrada"
+  description="Erro 404 — a página que você procura não está na prateleira do Laboratório Saúde."
+>
+  <section
+    class="container-site flex min-h-[72svh] flex-col items-center justify-center py-24 text-center"
+  >
+    <div data-reveal>
+      <Stamp class="text-brand" />
+    </div>
+
+    <p class="eyebrow mt-10" data-reveal style="--reveal-delay: 90ms">Erro 404</p>
+
+    <h1
+      class="mt-4 max-w-3xl text-5xl sm:text-6xl md:text-7xl"
+      data-reveal
+      style="--reveal-delay: 160ms"
+    >
+      Página <em class="italic">não</em> encontrada
+    </h1>
+
+    <p class="mt-6 text-lg text-ink-soft" data-reveal style="--reveal-delay: 230ms">
+      Este remédio não está na prateleira.
+    </p>
+
+    <div
+      class="mt-10 flex flex-wrap items-center justify-center gap-4"
+      data-reveal
+      style="--reveal-delay: 300ms"
+    >
+      <a href="/" class="btn btn-primary">Voltar ao início</a>
+      <a href="/produtos/" class="btn btn-outline">Ver produtos</a>
+    </div>
+  </section>
+</BaseLayout>

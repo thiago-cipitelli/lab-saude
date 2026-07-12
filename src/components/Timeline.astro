@@ -1,0 +1,185 @@
+---
+/**
+ * Linha do tempo vertical do Laboratório Saúde.
+ * Desktop: linha central com eventos alternando lados; ano gigante em Fraunces
+ * com "fantasma" deslocado em stroke — efeito de impressão desregistrada de
+ * rótulo antigo de botica. Mobile: linha à esquerda, tudo em coluna única.
+ */
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  events: CollectionEntry<'timeline'>[];
+}
+
+const { events } = Astro.props;
+---
+
+<div class="tl">
+  <div class="relative">
+    <div class="tl-line" aria-hidden="true"></div>
+
+    <ol class="relative flex flex-col gap-16 md:gap-24">
+      {
+        events.map((evento, index) => {
+          const { ano, texto, imagem } = evento.data;
+          const fotos = evento.data.imagens ?? [];
+          const temGrade = fotos.length > 1;
+          return (
+            <li
+              class:list={[
+                'tl-item relative pl-12 sm:pl-14 md:pl-0',
+                index % 2 === 1 && 'tl-item--invertido',
+              ]}
+              data-reveal
+              style={`--reveal-delay: ${(index % 3) * 90}ms`}
+            >
+              <span class="tl-marker" aria-hidden="true" />
+
+              <p class="tl-ano">
+                <span class="tl-ano-num font-display text-6xl md:text-7xl lg:text-8xl">
+                  {ano}
+                  <span class="tl-ano-ghost" aria-hidden="true">{ano}</span>
+                </span>
+              </p>
+
+              <article class="tl-card mt-5 rounded-2xl bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-card-hover sm:p-7 md:mt-0">
+                {temGrade ? (
+                  <div class="grid grid-cols-2 gap-2">
+                    {fotos.map((src, i) => (
+                      <img
+                        src={src}
+                        alt={`Instalações do Laboratório Saúde — foto ${i + 1} de ${fotos.length}`}
+                        loading="lazy"
+                        decoding="async"
+                        class:list={[
+                          'w-full rounded-lg object-cover',
+                          i === 0 ? 'col-span-2 aspect-[2/1]' : 'aspect-[4/3]',
+                        ]}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  imagem && (
+                    <div class="grid h-44 place-items-center rounded-xl bg-paper-deep/50 px-6 py-4">
+                      <img
+                        src={imagem}
+                        alt={`Registro do Laboratório Saúde em ${ano}`}
+                        loading="lazy"
+                        decoding="async"
+                        class="max-h-36 w-auto max-w-full object-contain"
+                      />
+                    </div>
+                  )
+                )}
+                <p class="mt-5 leading-relaxed text-ink first:mt-0">{texto}</p>
+              </article>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+
+  <p class="mt-16 text-center md:mt-20" data-reveal>
+    <em class="font-display text-xl italic text-ink-soft">…e a história continua.</em>
+  </p>
+</div>
+
+<style>
+  /* Linha vertical: à esquerda no mobile, central no desktop, com pontas esmaecidas */
+  .tl-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 1.25rem;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-line) 4rem,
+      var(--color-line) calc(100% - 4rem),
+      transparent
+    );
+  }
+
+  .tl-item {
+    /* Centro vertical do ano (leading 1), para alinhar o marcador */
+    --marker-y: 1.9rem;
+  }
+
+  /* Marcador: ponto vermelho com respiro de papel e anel externo */
+  .tl-marker {
+    position: absolute;
+    top: var(--marker-y);
+    left: 1.25rem;
+    z-index: 1;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 999px;
+    background: var(--color-brand);
+    transform: translate(-50%, -50%);
+    box-shadow:
+      0 0 0 4px var(--color-paper),
+      0 0 0 6px color-mix(in srgb, var(--color-brand) 45%, transparent);
+  }
+
+  /* Ano gigante em Fraunces, com segunda camada em stroke deslocado */
+  .tl-ano-num {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    color: var(--color-brand);
+    font-weight: 600;
+    font-variation-settings: 'opsz' 144;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .tl-ano-ghost {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translate(0.05em, 0.06em);
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-brand) 38%, transparent);
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .tl-line {
+      left: 50%;
+    }
+    .tl-item {
+      --marker-y: 2.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5rem;
+      align-items: start;
+    }
+    .tl-marker {
+      left: 50%;
+    }
+    .tl-ano {
+      grid-row: 1;
+      grid-column: 1;
+      text-align: right;
+    }
+    .tl-card {
+      grid-row: 1;
+      grid-column: 2;
+    }
+    .tl-item--invertido .tl-ano {
+      grid-column: 2;
+      text-align: left;
+    }
+    .tl-item--invertido .tl-card {
+      grid-column: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tl-item {
+      --marker-y: 3rem;
+    }
+  }
+</style>

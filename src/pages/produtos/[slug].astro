@@ -1,0 +1,261 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Stamp from '../../components/Stamp.astro';
+import { SITE, categoriaSlug } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const produtos = await getCollection('produtos');
+  return produtos.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'produtos'>;
+}
+
+const { entry } = Astro.props;
+const { title, tagline, category, image, gallery } = entry.data;
+const { Content } = await render(entry);
+
+// Foto principal + galeria formam as "vistas" alternáveis da vitrine
+const vistas = [image, ...gallery];
+const slugDaCategoria = category ? categoriaSlug(category) : null;
+
+const porOrdem = (
+  a: CollectionEntry<'produtos'>,
+  b: CollectionEntry<'produtos'>,
+) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'pt-BR');
+
+const todos = (await getCollection('produtos')).sort(porOrdem);
+const daMesmaCategoria = todos.filter(
+  (p) => p.id !== entry.id && category !== undefined && p.data.category === category,
+);
+const complemento = todos.filter(
+  (p) => p.id !== entry.id && !daMesmaCategoria.includes(p),
+);
+const relacionados = [...daMesmaCategoria, ...complemento].slice(0, 3);
+const temRelacionadosDaCategoria = category !== undefined && daMesmaCategoria.length > 0;
+const tituloRelacionados = temRelacionadosDaCategoria
+  ? `Mais em ${category}`
+  : 'Mais produtos para conhecer';
+const linkRelacionados =
+  temRelacionadosDaCategoria && slugDaCategoria
+    ? `/categorias/${slugDaCategoria}/`
+    : '/produtos/';
+
+const schemaProduto = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: title,
+  image: new URL(image.src, Astro.site).href,
+  description: tagline ?? SITE.description,
+  brand: { '@type': 'Brand', name: 'Laboratório Saúde' },
+};
+---
+
+<BaseLayout title={title} description={tagline ?? SITE.description} image={image.src}>
+  <section class="container-site pt-8 md:pt-12">
+    <nav aria-label="Trilha de navegação" class="text-sm text-ink-soft" data-reveal>
+      <ol class="flex flex-wrap items-center gap-2">
+        <li>
+          <a href="/produtos/" class="transition-colors hover:text-brand">Produtos</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="font-medium text-ink">{title}</li>
+      </ol>
+    </nav>
+
+    <div class="mt-8 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
+      <div class="relative" data-galeria data-reveal>
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-paper to-paper-deep shadow-card ring-1 ring-line/60">
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,rgb(255_255_255/0.7),transparent_62%)]"
+          >
+          </div>
+          <div class="relative aspect-square">
+            {
+              vistas.map((vista, i) => (
+                <div
+                  class:list={[
+                    'vista absolute inset-0 grid place-items-center p-8 sm:p-12',
+                    i === 0 && 'is-active',
+                  ]}
+                  data-vista={String(i)}
+                >
+                  <Image
+                    src={vista}
+                    alt={i === 0 ? title : `${title} — foto ${i + 1}`}
+                    width={720}
+                    densities={[1, 2]}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    class="max-h-full w-auto object-contain drop-shadow-[0_26px_30px_rgb(44_35_32/0.2)]"
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div
+          class="pointer-events-none absolute -top-6 -right-4 z-10 hidden text-brand sm:block"
+          aria-hidden="true"
+        >
+          <Stamp class="scale-[0.85]" />
+        </div>
+
+        {
+          gallery.length > 0 && (
+            <div class="mt-4 flex flex-wrap gap-3" role="group" aria-label={`Fotos de ${title}`}>
+              {vistas.map((vista, i) => (
+                <button
+                  type="button"
+                  data-thumb={String(i)}
+                  aria-pressed={i === 0 ? 'true' : 'false'}
+                  aria-label={`Mostrar foto ${i + 1} de ${title}`}
+                  class="h-20 w-20 cursor-pointer overflow-hidden rounded-xl border-2 border-line/70 bg-white p-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/50 aria-pressed:border-brand aria-pressed:shadow-card"
+                >
+                  <Image
+                    src={vista}
+                    alt=""
+                    width={144}
+                    loading="lazy"
+                    class="h-full w-full object-contain"
+                  />
+                </button>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <div data-reveal style="--reveal-delay: 120ms">
+        {
+          category && slugDaCategoria && (
+            <a
+              href={`/categorias/${slugDaCategoria}/`}
+              class="inline-flex items-center gap-2 rounded-full bg-brand-wash px-4 py-1.5 text-[0.7rem] font-bold tracking-[0.18em] text-brand uppercase transition-colors hover:bg-brand hover:text-white"
+            >
+              {category}
+            </a>
+          )
+        }
+        <h1 class="mt-4 text-4xl sm:text-5xl">{title}</h1>
+        {
+          tagline && (
+            <p class="mt-5 font-display text-xl italic leading-snug text-ink-soft sm:text-2xl">
+              {tagline}
+            </p>
+          )
+        }
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={SITE.lojaUrl} target="_blank" rel="noopener" class="btn btn-primary">
+            Comprar na loja
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path
+                d="M3 11 11 3m0 0H4.5M11 3v6.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <a href="/sac/" class="btn btn-outline">Fale com o SAC</a>
+        </div>
+
+        <p class="mt-10 flex items-center gap-3 text-sm text-ink-soft">
+          <span class="h-px w-8 bg-brand" aria-hidden="true"></span>
+          Tradição gaúcha desde 1957
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-site mt-16 md:mt-24" aria-label={`Informações sobre ${title}`}>
+    <div class="prose produto-corpo mx-auto" data-reveal>
+      <Content />
+    </div>
+  </section>
+
+  <section class="container-site mt-20 pb-24 md:mt-28">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <SectionHeading eyebrow="Continue explorando" title={tituloRelacionados} />
+      <a href={linkRelacionados} class="btn btn-ghost" data-reveal>
+        Ver todos
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M2 7h10m0 0L8 3m4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {relacionados.map((p, i) => <ProductCard produto={p} index={i} />)}
+    </div>
+  </section>
+
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaProduto)} />
+</BaseLayout>
+
+<style>
+  /* Vistas alternáveis da vitrine: só a ativa aparece, com fade suave */
+  .vista {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.985);
+    transition:
+      opacity 320ms ease,
+      transform 320ms ease,
+      visibility 0s linear 320ms;
+  }
+  .vista.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* Divisores editoriais nos títulos do corpo (Descrição, Composição...) */
+  .produto-corpo :global(h2) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .produto-corpo :global(h2)::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: var(--color-line);
+  }
+</style>
+
+<script>
+  // Troca da imagem principal pela miniatura clicada (galeria da vitrine)
+  const galeria = document.querySelector('[data-galeria]');
+  if (galeria) {
+    const vistas = Array.from(galeria.querySelectorAll<HTMLElement>('[data-vista]'));
+    const thumbs = Array.from(galeria.querySelectorAll<HTMLButtonElement>('[data-thumb]'));
+    for (const botao of thumbs) {
+      botao.addEventListener('click', () => {
+        const alvo = botao.dataset.thumb;
+        for (const vista of vistas) {
+          vista.classList.toggle('is-active', vista.dataset.vista === alvo);
+        }
+        for (const t of thumbs) {
+          t.setAttribute('aria-pressed', String(t === botao));
+        }
+      });
+    }
+  }
+</script>

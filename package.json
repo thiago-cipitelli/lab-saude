@@ -21,6 +21,8 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "@types/sanitize-html": "^2.16.1"
+    "@astrojs/check": "^0.9.9",
+    "@types/sanitize-html": "^2.16.1",
+    "typescript": "^6.0.3"
   }
 }

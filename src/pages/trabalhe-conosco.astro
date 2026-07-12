@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormField from '../components/FormField.astro';
+import institucional from '../data/institucional.json';
+
+type Campo = {
+  name: string;
+  label: string | null;
+  type: string;
+  required: boolean;
+  accept?: string;
+  nota?: string;
+};
+
+const formulario = institucional.trabalheConosco.formulario as unknown as {
+  titulo: string;
+  campos: Campo[];
+  botaoEnviar: string;
+};
+
+const campo = (name: string) => formulario.campos.find((c) => c.name === name);
+// O asterisco do label original vira o marcador de obrigatório do FormField
+const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/, '');
+---
+
+<BaseLayout
+  title="Trabalhe Conosco"
+  description="Envie seu currículo para o Laboratório Saúde e faça parte de uma história que começou em 1957."
+>
+  <section
+    class="container-site grid items-start gap-12 py-16 md:py-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20 lg:py-24"
+  >
+    <!-- Coluna de convite -->
+    <div data-reveal class="lg:sticky lg:top-28 lg:self-start">
+      <p class="eyebrow">Carreiras</p>
+      <h1 class="mt-3 text-5xl sm:text-6xl">Trabalhe <em class="italic">Conosco</em></h1>
+      <p class="mt-6 max-w-md text-lg text-ink-soft">
+        Quer fazer parte dessa história? Conte um pouco sobre você e envie seu currículo — quando
+        surgir uma oportunidade na sua área de interesse, ele já estará com a gente.
+      </p>
+
+      <figure
+        class="mt-10 rounded-2xl bg-brand p-8 text-white shadow-card"
+        data-reveal
+        style="--reveal-delay: 90ms"
+      >
+        <!-- Copy exato da Visão em institucional.json (quemSomos.blocos) -->
+        <blockquote class="font-display text-xl leading-snug italic sm:text-2xl">
+          “Ser uma empresa de crescimento sustentável, fundamentada em <em
+            class="underline decoration-white/60 decoration-2 underline-offset-4"
+            >colaboradores valorizados e comprometidos</em
+          > e marcas reconhecidas.”
+        </blockquote>
+        <figcaption class="mt-5 text-xs font-bold tracking-[0.2em] text-white uppercase">
+          Nossa visão
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Formulário -->
+    <div
+      class="rounded-2xl bg-white p-6 shadow-card sm:p-8 lg:p-10"
+      data-reveal
+      style="--reveal-delay: 120ms"
+    >
+      <h2 class="text-2xl sm:text-3xl">Envie sua <em class="italic">candidatura</em></h2>
+      <p class="mt-2 text-sm text-ink-soft">
+        Campos marcados com <span class="text-brand">*</span> são obrigatórios.
+      </p>
+
+      <!-- INTEGRAÇÃO REAL PÓS-APROVAÇÃO: apontar para provedor de forms (Web3Forms/função serverless) -->
+      <form id="form-trabalhe" class="mt-8 space-y-5">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <FormField name="nome" label={rotulo('nome')} required />
+          <FormField name="sobrenome" label={rotulo('sobrenome')} required />
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <FormField name="email" label={rotulo('email')} type="email" required />
+          <FormField name="telefone" label={rotulo('telefone')} type="tel" required />
+        </div>
+        <FormField name="area" label={rotulo('area')} required />
+        <FormField name="msg" label={rotulo('msg')} type="textarea" />
+        <FormField
+          name="file"
+          label={rotulo('file')}
+          type="file"
+          required
+          accept=".pdf,.doc"
+          hint="Apenas arquivos PDF e DOC são aceitos."
+        />
+
+        <div class="pt-2">
+          <button type="submit" class="btn btn-primary">{formulario.botaoEnviar}</button>
+        </div>
+
+        <p
+          id="status-trabalhe"
+          role="status"
+          hidden
+          class="flex items-start gap-2 rounded-xl border border-teal/40 bg-teal-wash px-4 py-3 text-sm font-medium text-ink"
+        >
+          <span class="text-teal" aria-hidden="true">✓</span>
+          <span>Demonstração — o envio será ativado na versão final.</span>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // Demonstração visual: intercepta o envio e mostra a confirmação inline.
+    const form = document.getElementById('form-trabalhe');
+    const status = document.getElementById('status-trabalhe');
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (status) {
+        status.hidden = false;
+        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  </script>
+</BaseLayout>
