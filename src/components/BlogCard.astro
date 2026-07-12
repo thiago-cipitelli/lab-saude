@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/site';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  index?: number;
+  /** Card de destaque (maior, primeiro da listagem) */
+  featured?: boolean;
+}
+
+const { post, index = 0, featured = false } = Astro.props;
+const { title, date, excerpt, cover, coverAlt } = post.data;
+---
+
+<article
+  class:list={[
+    'group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover',
+    featured && 'md:col-span-2 md:grid md:grid-cols-2',
+  ]}
+  data-reveal
+  style={`--reveal-delay: ${Math.min(index % 3, 2) * 90}ms`}
+>
+  <div
+    class:list={[
+      'relative overflow-hidden bg-paper-deep',
+      featured ? 'aspect-[16/10] md:aspect-auto md:h-full' : 'aspect-[16/10]',
+    ]}
+  >
+    {
+      cover ? (
+        <Image
+          src={cover}
+          alt={coverAlt || ''}
+          width={featured ? 900 : 600}
+          height={featured ? 560 : 375}
+          class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+        />
+      ) : (
+        <div class="flex h-full w-full items-center justify-center bg-brand-wash">
+          <span class="font-display text-5xl italic text-brand/30">Saúde</span>
+        </div>
+      )
+    }
+  </div>
+
+  <div class:list={['flex grow flex-col p-6', featured && 'md:justify-center md:p-10']}>
+    <time datetime={date.toISOString()} class="text-xs font-bold tracking-[0.16em] text-ink-soft uppercase">
+      {formatDate(date)}
+    </time>
+    <h3
+      class:list={[
+        'mt-2.5 font-display text-ink transition-colors group-hover:text-brand',
+        featured ? 'text-2xl md:text-3xl' : 'text-xl',
+      ]}
+    >
+      <a href={`/blog/${post.id}/`} class="after:absolute after:inset-0">
+        {title}
+      </a>
+    </h3>
+    {
+      excerpt && (
+        <p
+          class:list={[
+            'mt-3 text-sm leading-relaxed text-ink-soft',
+            featured ? 'line-clamp-4 md:text-base' : 'line-clamp-3',
+          ]}
+        >
+          {excerpt}
+        </p>
+      )
+    }
+    <span class="mt-auto flex items-center gap-1.5 pt-4 text-sm font-medium text-brand">
+      Ler mais
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        aria-hidden="true"
+        class="transition-transform duration-300 group-hover:translate-x-1"
+      >
+        <path d="M2 7h10m0 0L8 3m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+</article>

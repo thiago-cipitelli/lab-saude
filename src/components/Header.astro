@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+import { NAV, SITE } from '../lib/site';
+import logo from '../assets/theme/imgs/logo.png';
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md"
+>
+  <div class="container-site flex h-16 items-center justify-between gap-6 md:h-[4.5rem]">
+    <a href="/" class="flex shrink-0 items-center" aria-label="Laboratório Saúde — página inicial">
+      <Image src={logo} alt="Laboratório Saúde" class="h-8 w-auto md:h-9" densities={[1, 2]} />
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class:list={[
+              'rounded-full px-3.5 py-2 text-[0.9rem] font-medium tracking-wide transition-colors',
+              isActive(item.href)
+                ? 'bg-brand-wash text-brand'
+                : 'text-ink hover:text-brand',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href={SITE.lojaUrl}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary ml-3 !px-5 !py-2 text-sm"
+      >
+        Loja
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="sr-only">(abre em nova aba)</span>
+      </a>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      class="flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-brand-wash hover:text-brand lg:hidden"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      aria-label="Abrir menu"
+    >
+      <svg id="icon-open" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+      <svg id="icon-close" class="hidden" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="menu-mobile"
+    class="hidden border-t border-line lg:!hidden"
+    aria-label="Navegação principal (celular)"
+  >
+    <div class="container-site flex flex-col gap-1 py-4">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class:list={[
+              'rounded-xl px-4 py-3 text-base font-medium',
+              isActive(item.href)
+                ? 'bg-brand-wash text-brand'
+                : 'text-ink hover:bg-paper-deep',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href={SITE.lojaUrl}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary mt-2 justify-center"
+      >
+        Visitar a Loja
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle')!;
+  const menu = document.getElementById('menu-mobile')!;
+  const iconOpen = document.getElementById('icon-open')!;
+  const iconClose = document.getElementById('icon-close')!;
+
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    iconOpen.classList.toggle('hidden', open);
+    iconClose.classList.toggle('hidden', !open);
+  });
+</script>

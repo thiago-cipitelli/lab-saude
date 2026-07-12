@@ -1,0 +1,51 @@
+---
+/**
+ * Selo circular "Desde 1957" — assinatura visual da marca no redesign.
+ * Texto circular girando devagar, com o ano no centro em serif.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={['stamp relative inline-grid place-items-center', className]}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 120 120" class="stamp-ring h-full w-full">
+    <defs>
+      <path
+        id="stamp-circle"
+        d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"
+      ></path>
+    </defs>
+    <text class="fill-current text-[11.5px] font-medium uppercase" letter-spacing="3.1">
+      <textPath href="#stamp-circle">
+        Tradição gaúcha · Desde 1957 · Laboratório Saúde ·
+      </textPath>
+    </text>
+  </svg>
+  <span
+    class="absolute font-display text-2xl font-semibold italic"
+  >
+    1957
+  </span>
+</div>
+
+<style>
+  .stamp {
+    width: 8rem;
+    height: 8rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .stamp-ring {
+      animation: stamp-spin 28s linear infinite;
+    }
+  }
+  @keyframes stamp-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+</style>

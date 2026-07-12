@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import { NAV, SITE } from '../lib/site';
+import logoMono from '../assets/theme/imgs/saude_logo.png';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="bg-ink text-paper">
+  <div class="container-site grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
+    <div>
+      <Image
+        src={logoMono}
+        alt="Laboratório Saúde"
+        class="h-9 w-auto brightness-0 invert opacity-90"
+        densities={[1, 2]}
+      />
+      <p class="mt-5 max-w-sm text-sm leading-relaxed text-paper/70">
+        Há mais de 60 anos no ramo farmacêutico, com produtos que moram no
+        coração dos gaúchos — do bebê aos avós, com qualidade e carinho.
+      </p>
+      <p class="mt-6 font-display text-sm italic text-paper/50">
+        Desde 1957 · Porto Alegre, Rio Grande do Sul
+      </p>
+    </div>
+
+    <nav aria-label="Mapa do site">
+      <h2 class="eyebrow !text-paper/50">Navegação</h2>
+      <ul class="mt-4 space-y-2.5">
+        {
+          NAV.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-paper/80 transition-colors hover:text-white">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a
+            href={SITE.lojaUrl}
+            target="_blank"
+            rel="noopener"
+            class="text-sm text-paper/80 transition-colors hover:text-white"
+          >
+            Loja online ↗
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="eyebrow !text-paper/50">Contato</h2>
+      <ul class="mt-4 space-y-2.5 text-sm text-paper/80">
+        <li>
+          <a href={`tel:${SITE.contato.telefone.replace(/\D/g, '')}`} class="transition-colors hover:text-white">
+            {SITE.contato.telefone}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${SITE.contato.email}`} class="transition-colors hover:text-white">
+            {SITE.contato.email}
+          </a>
+        </li>
+        <li class="max-w-xs leading-relaxed">{SITE.endereco}</li>
+      </ul>
+      <div class="mt-5 flex gap-3">
+        <a
+          href={SITE.redes.facebook}
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook do Laboratório Saúde (abre em nova aba)"
+          class="flex h-9 w-9 items-center justify-center rounded-full border border-paper/25 text-paper/80 transition-colors hover:border-white hover:text-white"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.7c0-.9.3-1.6 1.6-1.6h1.7V3.2c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.4V13h2.7v8h3.4Z" />
+          </svg>
+        </a>
+        <a
+          href={SITE.redes.youtube}
+          target="_blank"
+          rel="noopener"
+          aria-label="YouTube do Laboratório Saúde (abre em nova aba)"
+          class="flex h-9 w-9 items-center justify-center rounded-full border border-paper/25 text-paper/80 transition-colors hover:border-white hover:text-white"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15.2V8.8l5.2 3.2-5.2 3.2Z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-paper/15">
+    <div class="container-site flex flex-col items-center justify-between gap-2 py-5 text-xs text-paper/50 sm:flex-row">
+      <p>© {ano} Laboratório Saúde Ltda. Todos os direitos reservados.</p>
+      <p>Rua Voluntários da Pátria, 3969 — Porto Alegre/RS</p>
+    </div>
+  </div>
+</footer>

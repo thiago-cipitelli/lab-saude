@@ -1,0 +1,232 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces/standard.css';
+@import '@fontsource-variable/fraunces/standard-italic.css';
+
+/* MundoSans é a fonte proprietária da marca, recuperada do tema atual.
+   O peso Regular (400) está corrompido no servidor de origem — o corpo
+   usa Light (300) em tamanho generoso, como o site original fazia. */
+@font-face {
+  font-family: 'MundoSans';
+  src: url('../assets/fonts/MundoSansStd-Light_0.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MundoSans';
+  src: url('../assets/fonts/MundoSansStd-Med_0.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MundoSans';
+  src: url('../assets/fonts/MundoSansStd-Bold_0.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'MundoSans', 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+  /* Vermelho #e70032: cor única do logo, confirmada por análise de pixel */
+  --color-brand: #e70032;
+  --color-brand-deep: #b4002a;
+  --color-brand-wash: #fdedf0;
+  --color-ink: #2c2320;
+  --color-ink-soft: #6f625b;
+  --color-paper: #faf6ef;
+  --color-paper-deep: #f2ead9;
+  --color-line: #e5dbc9;
+  --color-teal: #2fa099;
+  --color-teal-wash: #eaf5f5;
+  --color-orange: #f05a24;
+
+  --shadow-card: 0 1px 2px rgb(44 35 32 / 0.06), 0 8px 24px -8px rgb(44 35 32 / 0.14);
+  --shadow-card-hover: 0 2px 4px rgb(44 35 32 / 0.08), 0 20px 40px -12px rgb(44 35 32 / 0.22);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* Grão de papel sutil sobre toda a página — textura de embalagem antiga */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 72;
+    font-weight: 560;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* Rótulo pequeno em caixa alta que antecede títulos de seção */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+    padding: 0.8rem 1.75rem;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    transition: all 200ms ease;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background-color: var(--color-brand);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-brand-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px -6px rgb(231 0 50 / 0.45);
+  }
+  .btn-outline {
+    border-color: currentColor;
+    color: var(--color-brand);
+  }
+  .btn-outline:hover {
+    background-color: var(--color-brand);
+    border-color: var(--color-brand);
+    color: #fff;
+  }
+  .btn-ghost {
+    color: var(--color-ink);
+    padding-inline: 1rem;
+  }
+  .btn-ghost:hover {
+    color: var(--color-brand);
+  }
+
+  /* Tipografia dos corpos de post do blog (HTML sanitizado do WordPress) */
+  .prose {
+    max-width: 42rem;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+  .prose > * + * {
+    margin-top: 1.25em;
+  }
+  .prose h2, .prose h3, .prose h4 {
+    color: var(--color-ink);
+    margin-top: 1.8em;
+  }
+  .prose h2 { font-size: 1.75rem; }
+  .prose h3 { font-size: 1.35rem; }
+  .prose h4 { font-size: 1.15rem; }
+  .prose a {
+    color: var(--color-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .prose a:hover { color: var(--color-brand-deep); }
+  .prose strong { font-weight: 700; color: var(--color-ink); }
+  .prose ul, .prose ol { padding-left: 1.4em; }
+  .prose ul { list-style: disc; }
+  .prose ol { list-style: decimal; }
+  .prose li { margin-top: 0.4em; }
+  .prose li::marker { color: var(--color-brand); }
+  .prose blockquote {
+    border-left: 3px solid var(--color-brand);
+    padding-left: 1.25rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--color-ink-soft);
+  }
+  .prose img {
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-card);
+    margin-inline: auto;
+  }
+  .prose figcaption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-ink-soft);
+    margin-top: 0.6em;
+  }
+  .prose table { width: 100%; font-size: 0.9375rem; }
+  .prose th, .prose td {
+    border: 1px solid var(--color-line);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+  .prose th { background-color: var(--color-paper-deep); font-weight: 500; }
+}
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 72rem;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Revelação no scroll: elementos com data-reveal entram suaves, com
+   atraso opcional via --reveal-delay. Controlado por script no BaseLayout. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal].revealed {
+    opacity: 1;
+    transform: none;
+  }
+}

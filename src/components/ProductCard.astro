@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  produto: CollectionEntry<'produtos'>;
+  /** Índice para escalonar a animação de entrada */
+  index?: number;
+  /** Prioriza carregamento (cards acima da dobra) */
+  eager?: boolean;
+}
+
+const { produto, index = 0, eager = false } = Astro.props;
+const { title, tagline, category, image } = produto.data;
+---
+
+<a
+  href={`/produtos/${produto.id}/`}
+  class="product-card group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
+  data-reveal
+  style={`--reveal-delay: ${Math.min(index % 4, 3) * 90}ms`}
+>
+  <div class="relative flex aspect-square items-center justify-center overflow-hidden bg-gradient-to-b from-paper to-paper-deep p-8">
+    <Image
+      src={image}
+      alt={title}
+      width={480}
+      densities={[1, 2]}
+      loading={eager ? 'eager' : 'lazy'}
+      class="max-h-full w-auto object-contain drop-shadow-[0_18px_20px_rgb(44_35_32/0.18)] transition-transform duration-500 ease-out group-hover:scale-[1.06] group-hover:-rotate-1"
+    />
+    {
+      category && (
+        <span class="absolute top-4 left-4 rounded-full bg-white/80 px-3 py-1 text-[0.7rem] font-bold tracking-[0.14em] text-ink-soft uppercase backdrop-blur-sm">
+          {category}
+        </span>
+      )
+    }
+  </div>
+
+  <div class="flex grow flex-col p-6">
+    <h3 class="font-display text-xl text-ink transition-colors group-hover:text-brand">
+      {title}
+    </h3>
+    {tagline && <p class="mt-2 text-sm leading-relaxed text-ink-soft">{tagline}</p>}
+    <span class="mt-auto flex items-center gap-1.5 pt-4 text-sm font-medium text-brand">
+      Conhecer
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        aria-hidden="true"
+        class="transition-transform duration-300 group-hover:translate-x-1"
+      >
+        <path d="M2 7h10m0 0L8 3m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+</a>

@@ -1,0 +1,71 @@
+---
+interface Option {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  name: string;
+  label: string;
+  type?:
+    | 'text'
+    | 'email'
+    | 'tel'
+    | 'textarea'
+    | 'select'
+    | 'file';
+  required?: boolean;
+  options?: Option[];
+  /** Nota auxiliar abaixo do campo (ex.: formatos de arquivo aceitos) */
+  hint?: string;
+  accept?: string;
+  class?: string;
+}
+
+const {
+  name,
+  label,
+  type = 'text',
+  required = false,
+  options = [],
+  hint,
+  accept,
+  class: className,
+} = Astro.props;
+
+const id = `campo-${name}`;
+const baseClass =
+  'w-full rounded-xl border border-line bg-white px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20';
+---
+
+<div class:list={['flex flex-col gap-1.5', className]}>
+  <label for={id} class="text-sm font-medium text-ink">
+    {label}
+    {required && <span class="text-brand" aria-hidden="true"> *</span>}
+  </label>
+
+  {
+    type === 'textarea' ? (
+      <textarea id={id} name={name} required={required} rows={5} class={baseClass} />
+    ) : type === 'select' ? (
+      <select id={id} name={name} required={required} class={baseClass}>
+        {options.map((opt) => (
+          <option value={opt.value}>{opt.label}</option>
+        ))}
+      </select>
+    ) : type === 'file' ? (
+      <input
+        id={id}
+        name={name}
+        type="file"
+        required={required}
+        accept={accept}
+        class="w-full rounded-xl border border-dashed border-line bg-white px-4 py-3 text-sm text-ink-soft file:mr-4 file:rounded-full file:border-0 file:bg-brand-wash file:px-4 file:py-2 file:text-sm file:font-medium file:text-brand hover:file:bg-brand hover:file:text-white"
+      />
+    ) : (
+      <input id={id} name={name} type={type} required={required} class={baseClass} />
+    )
+  }
+
+  {hint && <p class="text-xs text-ink-soft">{hint}</p>}
+</div>

@@ -1,17 +1,11 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={SITE.name}>
+  <section class="container-site py-24">
+    <p class="eyebrow">Desde 1957</p>
+    <h1 class="mt-3 text-5xl">Página provisória</h1>
+  </section>
+</BaseLayout>
