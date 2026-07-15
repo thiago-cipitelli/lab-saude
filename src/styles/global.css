@@ -49,11 +49,16 @@
 
   --shadow-card: 0 1px 2px rgb(44 35 32 / 0.06), 0 8px 24px -8px rgb(44 35 32 / 0.14);
   --shadow-card-hover: 0 2px 4px rgb(44 35 32 / 0.08), 0 20px 40px -12px rgb(44 35 32 / 0.22);
+
+  /* Curva de motion da marca — usada no reveal, hero e interações */
+  --ease-out-strong: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -121,8 +126,16 @@
     padding: 0.8rem 1.75rem;
     border-radius: 999px;
     border: 1.5px solid transparent;
-    transition: all 200ms ease;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      box-shadow 200ms ease,
+      transform 200ms var(--ease-out-strong);
     cursor: pointer;
+  }
+  .btn:active {
+    transform: scale(0.97);
   }
   .btn-primary {
     background-color: var(--color-brand);
@@ -205,6 +218,26 @@
     text-align: left;
   }
   .prose th { background-color: var(--color-paper-deep); font-weight: 500; }
+
+  /* Entrada da mensagem de status dos formulários (SAC / Trabalhe Conosco) */
+  .status-enter {
+    transition:
+      opacity 240ms var(--ease-out-strong),
+      translate 240ms var(--ease-out-strong);
+  }
+  .status-enter:not([hidden]) {
+    @starting-style {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .status-enter:not([hidden]) {
+      @starting-style {
+        opacity: 0;
+        translate: 0 8px;
+      }
+    }
+  }
 }
 
 @utility container-site {
@@ -224,7 +257,7 @@
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal] {
     transform: translateY(30px);
-    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 700ms var(--ease-out-strong);
     transition-delay: var(--reveal-delay, 0ms);
   }
   [data-reveal].revealed {

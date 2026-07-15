@@ -95,7 +95,7 @@ const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/,
           id="status-trabalhe"
           role="status"
           hidden
-          class="flex items-start gap-2 rounded-xl border border-teal/40 bg-teal-wash px-4 py-3 text-sm font-medium text-ink"
+          class="status-enter flex items-start gap-2 rounded-xl border border-teal/40 bg-teal-wash px-4 py-3 text-sm font-medium text-ink"
         >
           <span class="text-teal" aria-hidden="true">✓</span>
           <span>Demonstração — o envio será ativado na versão final.</span>
@@ -112,7 +112,7 @@ const rotulo = (name: string) => (campo(name)?.label ?? '').replace(/\s*\*\s*$/,
       event.preventDefault();
       if (status) {
         status.hidden = false;
-        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        status.scrollIntoView({ block: 'nearest' });
       }
     });
   </script>

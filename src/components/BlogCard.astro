@@ -16,11 +16,11 @@ const { title, date, excerpt, cover, coverAlt } = post.data;
 
 <article
   class:list={[
-    'group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover',
+    'group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-card-hover',
     featured && 'md:col-span-2 md:grid md:grid-cols-2',
   ]}
   data-reveal
-  style={`--reveal-delay: ${Math.min(index % 3, 2) * 90}ms`}
+  style={`--reveal-delay: ${Math.min(index % 3, 2) * 70}ms`}
 >
   <div
     class:list={[

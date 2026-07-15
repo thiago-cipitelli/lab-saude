@@ -140,9 +140,9 @@ const posts = (await getCollection('blog'))
         categorias.map((cat, i) => (
           <a
             href={`/categorias/${cat.slug}/`}
-            class="group relative flex flex-col rounded-2xl bg-white p-8 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
+            class="group relative flex flex-col rounded-2xl bg-white p-8 shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
             data-reveal
-            style={`--reveal-delay: ${i * 90}ms`}
+            style={`--reveal-delay: ${i * 70}ms`}
           >
             <span
               class:list={[
@@ -276,7 +276,7 @@ const posts = (await getCollection('blog'))
         </div>
         <a
           href="/linha-do-tempo/"
-          class="btn bg-white text-brand shadow-card transition-all hover:-translate-y-0.5 hover:bg-paper hover:shadow-card-hover"
+          class="btn bg-white text-brand shadow-card hover:-translate-y-0.5 hover:bg-paper hover:shadow-card-hover"
           data-reveal
           style="--reveal-delay: 120ms"
         >
@@ -290,7 +290,7 @@ const posts = (await getCollection('blog'))
             <li
               class="border-t border-white/30 pt-6"
               data-reveal
-              style={`--reveal-delay: ${i * 90}ms`}
+              style={`--reveal-delay: ${i * 70}ms`}
             >
               <span class="font-display text-5xl italic sm:text-6xl">
                 {marco.data.ano}
@@ -417,7 +417,7 @@ const posts = (await getCollection('blog'))
 
   @media (prefers-reduced-motion: no-preference) {
     .hero-enter {
-      animation: hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: hero-rise 700ms var(--ease-out-strong) both;
       animation-delay: var(--enter-delay, 0ms);
     }
     @keyframes hero-rise {

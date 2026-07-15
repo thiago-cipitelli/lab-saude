@@ -120,7 +120,7 @@ const schemaProduto = {
                   data-thumb={String(i)}
                   aria-pressed={i === 0 ? 'true' : 'false'}
                   aria-label={`Mostrar foto ${i + 1} de ${title}`}
-                  class="h-20 w-20 cursor-pointer overflow-hidden rounded-xl border-2 border-line/70 bg-white p-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/50 aria-pressed:border-brand aria-pressed:shadow-card"
+                  class="h-20 w-20 cursor-pointer overflow-hidden rounded-xl border-2 border-line/70 bg-white p-2 transition duration-200 hover:-translate-y-0.5 hover:border-brand/50 active:scale-[0.97] aria-pressed:border-brand aria-pressed:shadow-card"
                 >
                   <Image
                     src={vista}
@@ -215,9 +215,9 @@ const schemaProduto = {
     visibility: hidden;
     transform: scale(0.985);
     transition:
-      opacity 320ms ease,
-      transform 320ms ease,
-      visibility 0s linear 320ms;
+      opacity 240ms var(--ease-out-strong),
+      transform 240ms var(--ease-out-strong),
+      visibility 0s linear 240ms;
   }
   .vista.is-active {
     opacity: 1;

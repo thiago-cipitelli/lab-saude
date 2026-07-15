@@ -47,8 +47,22 @@ const seo = Astro.props;
         (entries) => {
           for (const entry of entries) {
             if (entry.isIntersecting) {
-              entry.target.classList.add('revealed');
-              observer.unobserve(entry.target);
+              const el = entry.target as HTMLElement;
+              el.classList.add('revealed');
+              observer.unobserve(el);
+              // Ao fim da entrada, remover o atributo devolve as transitions
+              // de hover ao elemento (a regra [data-reveal] deixa de aplicar)
+              const done = () => {
+                el.removeAttribute('data-reveal');
+                el.removeEventListener('transitionend', onEnd);
+                clearTimeout(timer);
+              };
+              const onEnd = (e: TransitionEvent) => {
+                if (e.target === el && e.propertyName === 'transform') done();
+              };
+              el.addEventListener('transitionend', onEnd);
+              // Reduced motion não dispara transitionend — remoção de segurança
+              const timer = setTimeout(done, 1200);
             }
           }
         },

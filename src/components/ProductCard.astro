@@ -16,9 +16,9 @@ const { title, tagline, category, image } = produto.data;
 
 <a
   href={`/produtos/${produto.id}/`}
-  class="product-card group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
+  class="product-card group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-card-hover"
   data-reveal
-  style={`--reveal-delay: ${Math.min(index % 4, 3) * 90}ms`}
+  style={`--reveal-delay: ${Math.min(index % 4, 3) * 70}ms`}
 >
   <div class="relative flex aspect-square items-center justify-center overflow-hidden bg-gradient-to-b from-paper to-paper-deep p-8">
     <Image
